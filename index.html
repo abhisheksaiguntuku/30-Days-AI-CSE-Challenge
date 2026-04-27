@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer | Step-by-Step</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Step-by-Step Sorting Visualizer 🔍</h1>
+                <p>Day 1/30 • Watch exactly how the code manipulates data in real-time.</p>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="tabs">
+                <button class="tab-btn active" data-target="animation-page">Visualizer Workspace</button>
+                <button class="tab-btn" data-target="comparison-page">Algorithm Comparison Guide</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- PAGE 1: ANIMATION / VISUALIZER -->
+            <section id="animation-page" class="page active">
+                
+                <!-- Setup Panel -->
+                <div class="setup-panel glass-panel">
+                    <div class="setup-group">
+                        <label>Select Algorithm:</label>
+                        <select id="algoSelect" class="styled-select">
+                            <option value="bubble">Bubble Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="quick">Quick Sort</option>
+                        </select>
+                    </div>
+
+                    <div class="setup-group input-group">
+                        <label>Custom Array (Comma Separated):</label>
+                        <div class="input-row">
+                            <input type="text" id="customArrayInput" placeholder="e.g. 5, 2, 9, 1, 5, 6" value="10, 45, 12, 8, 30, 22, 50, 5">
+                            <button id="setArrayBtn" class="primary-btn">Set</button>
+                            <button id="randomArrayBtn" class="secondary-btn">Random</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Workspace: Visualizer + Code side-by-side -->
+                <div class="workspace-grid">
+                    
+                    <!-- Left: Visualization and Action Text -->
+                    <div class="visualizer-section glass-panel">
+                        <div class="controls-row">
+                            <button id="startBtn" class="accent-btn">▶️ Play Animation</button>
+                            <div class="slider-container">
+                                <label for="speedSlider">Speed: <span id="speedValue">Normal</span></label>
+                                <input type="range" id="speedSlider" min="1" max="100" value="50">
+                            </div>
+                        </div>
+
+                        <!-- The actual bars will go here -->
+                        <div id="main-array-container" class="large-array-container">
+                            <!-- JS will inject bars with numbers and indices here -->
+                        </div>
+
+                        <!-- Floating Popups for Conditions/Variables -->
+                        <div id="toast-container" class="toast-container"></div>
+
+                        <!-- Real-time Action Description -->
+                        <div class="action-box">
+                            <h3>Current Action:</h3>
+                            <p id="action-text">Waiting to start...</p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Pseudo-code tracking -->
+                    <div class="code-section glass-panel">
+                        <div class="track-header">
+                            <h2 id="code-title">Bubble Sort</h2>
+                        </div>
+                        <div class="code-container" id="code-display">
+                            <!-- JS injects specific lines with IDs so we can highlight them -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE 2: ALGORITHM COMPARISON -->
+            <section id="comparison-page" class="page glass-panel">
+                <div class="content-wrapper">
+                    <h2>Algorithm Comparison Guide</h2>
+                    <p>Understanding which sorting algorithm to use and when to use it is a critical Computer Science skill.</p>
+
+                    <div class="theory-grid">
+                        <div class="theory-card bubble-card">
+                            <h3>🐢 Bubble Sort</h3>
+                            <p><strong>Time Complexity:</strong> O(n²) Worst & Average Case</p>
+                            <p><strong>Space Complexity:</strong> O(1) In-place</p>
+                            <p><strong>How it works:</strong> Repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The largest elements "bubble" to the top.</p>
+                            <p><strong>When to use:</strong> Almost never in production. It is used strictly for educational purposes to teach loops and basic algorithmic thinking.</p>
+                        </div>
+
+                        <div class="theory-card insertion-card">
+                            <h3>🚶 Insertion Sort</h3>
+                            <p><strong>Time Complexity:</strong> O(n²) Worst | O(n) Best (Nearly Sorted)</p>
+                            <p><strong>Space Complexity:</strong> O(1) In-place</p>
+                            <p><strong>How it works:</strong> Builds the final sorted array one item at a time. It takes an element and inserts it into its correct position in the already-sorted part of the array.</p>
+                            <p><strong>When to use:</strong> Excellent for small datasets (like sorting hands of playing cards) or for data that is <em>already mostly sorted</em>. Often used as the base case for more complex algorithms (like Timsort in Python).</p>
+                        </div>
+
+                        <div class="theory-card quick-card">
+                            <h3>🚀 Quick Sort</h3>
+                            <p><strong>Time Complexity:</strong> O(n log n) Average | O(n²) Worst</p>
+                            <p><strong>Space Complexity:</strong> O(log n) Recursive Stack</p>
+                            <p><strong>How it works:</strong> A Divide and Conquer algorithm. It picks an element as a 'pivot' and partitions the array so that everything smaller is on the left, and everything larger is on the right, then recursively sorts the halves.</p>
+                            <p><strong>When to use:</strong> The default choice for large datasets in many programming languages. It has excellent cache locality and performs brilliantly on average.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
