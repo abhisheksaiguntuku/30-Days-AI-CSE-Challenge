@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked List Visualizer | Advanced Operations</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Advanced Linked List Visualizer 🔗</h1>
+                <p>Day 2/30 • Exploring standard and advanced pointer manipulation algorithms.</p>
+            </div>
+        </header>
+
+        <main>
+            <!-- CONTROLS PANEL -->
+            <section class="setup-panel glass-panel">
+                <div class="setup-group">
+                    <label>Linked List Type:</label>
+                    <select id="listTypeSelect" class="styled-select">
+                        <option value="sll">Singly Linked List</option>
+                        <option value="dll">Doubly Linked List</option>
+                        <option value="cll">Circular Linked List</option>
+                    </select>
+                </div>
+
+                <div class="setup-group input-group">
+                    <label>Value (Search/Add):</label>
+                    <input type="text" id="valueInput" placeholder="e.g. 42" maxlength="4">
+                </div>
+
+                <div class="setup-group input-group">
+                    <label>New Value (Update):</label>
+                    <input type="text" id="newValueInput" placeholder="e.g. 99" maxlength="4">
+                </div>
+
+                <div class="setup-group input-group">
+                    <label>Index (Middle Ops):</label>
+                    <input type="number" id="indexInput" placeholder="e.g. 2" min="0" max="10">
+                </div>
+                
+                <div class="slider-container">
+                    <label for="speedSlider">Animation Speed:</label>
+                    <input type="range" id="speedSlider" min="1" max="100" value="50">
+                </div>
+            </section>
+
+            <!-- OPERATION BUTTONS -->
+            <section class="ops-panel glass-panel">
+                <div class="btn-row">
+                    <strong class="row-label">Basic:</strong>
+                    <div class="btn-group">
+                        <button id="addFirstBtn" class="accent-btn">Add First</button>
+                        <button id="addMiddleBtn" class="accent-btn">Add Middle</button>
+                        <button id="addLastBtn" class="accent-btn">Add Last</button>
+                    </div>
+                    <div class="btn-group">
+                        <button id="removeFirstBtn" class="danger-btn">Remove First</button>
+                        <button id="removeMiddleBtn" class="danger-btn">Remove Middle</button>
+                        <button id="removeLastBtn" class="danger-btn">Remove Last</button>
+                    </div>
+                </div>
+
+                <div class="btn-row advanced-row">
+                    <strong class="row-label">Advanced:</strong>
+                    <div class="btn-group">
+                        <button id="reverseBtn" class="purple-btn">Reverse List</button>
+                        <button id="findMiddleBtn" class="purple-btn">Find Middle (Tortoise/Hare)</button>
+                        <button id="searchUpdateBtn" class="purple-btn">Search & Update</button>
+                        <button id="removeDuplicatesBtn" class="purple-btn">Remove Duplicates</button>
+                    </div>
+                    <div class="btn-group">
+                        <button id="createCycleBtn" class="warning-btn">Create Cycle</button>
+                        <button id="detectCycleBtn" class="warning-btn">Detect Cycle</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISUALIZER CANVAS -->
+            <section class="visualizer-section glass-panel">
+                <div id="main-ll-container" class="ll-container">
+                    <!-- Nodes and Arrows will be injected here -->
+                </div>
+                
+                <!-- Curved arrow for Circular Linked List tail-to-head OR Cycle Detection -->
+                <svg id="circular-arrow" class="circular-arrow-svg" style="display: none;">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="var(--pointer-color)" class="svg-arrowhead" />
+                        </marker>
+                    </defs>
+                    <path id="circular-path" d="" fill="transparent" stroke="var(--pointer-color)" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                </svg>
+
+                <!-- Floating Popups for Conditions/Variables -->
+                <div id="toast-container" class="toast-container"></div>
+                
+                <!-- Action Description Box -->
+                <div class="action-box">
+                    <h3>Current Action:</h3>
+                    <p id="action-text">Waiting for an operation...</p>
+                </div>
+            </section>
+
+            <!-- LOGIC WORKSPACE (Side by Side Code) -->
+            <section class="workspace-grid">
+                <!-- Addition Logic -->
+                <div class="code-section glass-panel">
+                    <div class="track-header">
+                        <h2>Addition Logic</h2>
+                    </div>
+                    <div class="code-container" id="code-add-display"></div>
+                </div>
+
+                <!-- Removal Logic -->
+                <div class="code-section glass-panel">
+                    <div class="track-header">
+                        <h2>Removal Logic</h2>
+                    </div>
+                    <div class="code-container" id="code-remove-display"></div>
+                </div>
+
+                <!-- Advanced Logic -->
+                <div class="code-section glass-panel advanced-code-panel">
+                    <div class="track-header">
+                        <h2>Advanced Logic</h2>
+                    </div>
+                    <div class="code-container" id="code-adv-display">
+                        <div class="code-line" style="color: var(--text-muted)">Select an advanced operation to view logic.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
