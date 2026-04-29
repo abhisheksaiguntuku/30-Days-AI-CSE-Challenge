@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack vs Queue Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Stack vs Queue 🧱</h1>
+                <p>Day 3/30 • Exploring LIFO vs FIFO Data Structures</p>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="tabs">
+                <button class="tab-btn active" data-target="slide-animation">Animation Workspace</button>
+                <button class="tab-btn" data-target="slide-code">Implementation Code</button>
+                <button class="tab-btn" data-target="slide-theory">Differences & Theory</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- SLIDE 1: ANIMATION WORKSPACE -->
+            <section id="slide-animation" class="slide active-slide">
+                
+                <!-- Speed Slider shared between both -->
+                <div class="global-controls glass-panel">
+                    <label for="speedSlider">Animation Speed:</label>
+                    <input type="range" id="speedSlider" min="1" max="100" value="60">
+                    <span id="speedValue" style="margin-left: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted);">Normal</span>
+                </div>
+
+                <!-- STACK WORKSPACE -->
+                <div class="ds-workspace stack-workspace glass-panel">
+                    <div class="ds-header">
+                        <h2>Stack (LIFO)</h2>
+                        <div class="ds-controls">
+                            <input type="text" id="stackInput" placeholder="Value" maxlength="3">
+                            <button id="pushBtn" class="accent-btn">Push (Top)</button>
+                            <button id="popBtn" class="danger-btn">Pop (Top)</button>
+                            <button id="peekStackBtn" class="purple-btn">Peek</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ds-grid">
+                        <div class="ds-canvas" id="stack-canvas">
+                            <div class="container-bucket stack-bucket">
+                                <!-- Stack Elements Go Here -->
+                                <div class="empty-text" id="stack-empty">Stack is Empty</div>
+                            </div>
+                        </div>
+                        <div class="ds-logic">
+                            <div class="track-header"><h3>Stack Logic</h3></div>
+                            <div class="code-container" id="stack-code">
+                                <div class="code-line" style="color: var(--text-muted)">Waiting for operation...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUEUE WORKSPACE -->
+                <div class="ds-workspace queue-workspace glass-panel">
+                    <div class="ds-header">
+                        <h2>Queue (FIFO)</h2>
+                        <div class="ds-controls">
+                            <input type="text" id="queueInput" placeholder="Value" maxlength="3">
+                            <button id="enqueueBtn" class="accent-btn">Enqueue (Rear)</button>
+                            <button id="dequeueBtn" class="danger-btn">Dequeue (Front)</button>
+                            <button id="peekQueueBtn" class="purple-btn">Peek</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ds-grid">
+                        <div class="ds-canvas" id="queue-canvas">
+                            <div class="container-bucket queue-bucket">
+                                <!-- Queue Elements Go Here -->
+                                <div class="empty-text" id="queue-empty">Queue is Empty</div>
+                            </div>
+                        </div>
+                        <div class="ds-logic">
+                            <div class="track-header"><h3>Queue Logic</h3></div>
+                            <div class="code-container" id="queue-code">
+                                <div class="code-line" style="color: var(--text-muted)">Waiting for operation...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Popups for Conditions/Variables -->
+                <div id="toast-container" class="toast-container"></div>
+            </section>
+
+            <!-- SLIDE 2: IMPLEMENTATION CODE -->
+            <section id="slide-code" class="slide glass-panel">
+                <div class="code-compare-grid">
+                    <div class="code-block-wrapper">
+                        <h3>Stack Implementation (C Language)</h3>
+                        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+#define MAX_SIZE 6
+
+typedef struct {
+    int items[MAX_SIZE];
+    int top;
+} Stack;
+
+void initStack(Stack *s) {
+    s-&gt;top = -1;
+}
+
+bool isFull(Stack *s) {
+    return s-&gt;top == MAX_SIZE - 1;
+}
+
+bool isEmpty(Stack *s) {
+    return s-&gt;top == -1;
+}
+
+void push(Stack *s, int element) {
+    if (isFull(s)) {
+        printf("Overflow Error\\n");
+        return;
+    }
+    s-&gt;items[++(s-&gt;top)] = element;
+}
+
+int pop(Stack *s) {
+    if (isEmpty(s)) {
+        printf("Underflow Error\\n");
+        return -1;
+    }
+    return s-&gt;items[(s-&gt;top)--];
+}
+
+int peek(Stack *s) {
+    if (isEmpty(s)) return -1;
+    return s-&gt;items[s-&gt;top];
+}</code></pre>
+                    </div>
+
+                    <div class="code-block-wrapper">
+                        <h3>Queue Implementation (C Language)</h3>
+                        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+#define MAX_SIZE 6
+
+typedef struct {
+    int items[MAX_SIZE];
+    int front;
+    int rear;
+} Queue;
+
+void initQueue(Queue *q) {
+    q-&gt;front = -1;
+    q-&gt;rear = -1;
+}
+
+bool isFull(Queue *q) {
+    return q-&gt;rear == MAX_SIZE - 1;
+}
+
+bool isEmpty(Queue *q) {
+    return q-&gt;front == -1 || q-&gt;front &gt; q-&gt;rear;
+}
+
+void enqueue(Queue *q, int element) {
+    if (isFull(q)) {
+        printf("Overflow Error\\n");
+        return;
+    }
+    if (q-&gt;front == -1) q-&gt;front = 0;
+    q-&gt;items[++(q-&gt;rear)] = element;
+}
+
+int dequeue(Queue *q) {
+    if (isEmpty(q)) {
+        printf("Underflow Error\\n");
+        return -1;
+    }
+    return q-&gt;items[(q-&gt;front)++];
+}
+
+int peek(Queue *q) {
+    if (isEmpty(q)) return -1;
+    return q-&gt;items[q-&gt;front];
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: DIFFERENCES & THEORY -->
+            <section id="slide-theory" class="slide glass-panel">
+                <div class="theory-content">
+                    <h2 style="text-align: center; color: var(--accent); margin-bottom: 2rem;">Stack vs. Queue Comparison</h2>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Stack 🥞</th>
+                                <th>Queue 🚶‍♂️</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Principle</strong></td>
+                                <td>LIFO (Last-In, First-Out)</td>
+                                <td>FIFO (First-In, First-Out)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Insertion</strong></td>
+                                <td><code>Push()</code> - Added to the Top</td>
+                                <td><code>Enqueue()</code> - Added to the Rear</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deletion</strong></td>
+                                <td><code>Pop()</code> - Removed from the Top</td>
+                                <td><code>Dequeue()</code> - Removed from the Front</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Time Complexity</strong></td>
+                                <td>O(1) for Push/Pop</td>
+                                <td>O(1) for Enqueue/Dequeue</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Use Cases</strong></td>
+                                <td>Undo mechanisms, Browser History, Function Call Stack (Recursion)</td>
+                                <td>Task scheduling, Printer jobs, Message Queues (Event Loop)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Real World Analogy</strong></td>
+                                <td>A stack of plates in a cafeteria. You only take from the top.</td>
+                                <td>A line of people waiting for tickets. First person in line goes first.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
