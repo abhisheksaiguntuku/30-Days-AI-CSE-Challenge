@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Search Algorithms Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Search Algorithms Race 🔍</h1>
+                <p>Day 4/30 • Watch how different algorithms eliminate data to find the target.</p>
+            </div>
+        </header>
+
+        <main>
+            <!-- CONTROLS PANEL -->
+            <section class="setup-panel glass-panel">
+                <div class="setup-group">
+                    <label>Search Algorithm:</label>
+                    <select id="algoSelect" class="styled-select">
+                        <option value="linear">Linear Search O(n)</option>
+                        <option value="binary">Binary Search O(log n)</option>
+                        <option value="jump">Jump Search O(√n)</option>
+                        <option value="interpolation">Interpolation Search O(log log n)</option>
+                    </select>
+                </div>
+
+                <div class="setup-group input-group array-input-group">
+                    <label>Custom Array (Comma Separated):</label>
+                    <input type="text" id="arrayInput" placeholder="e.g. 5, 12, 34, 42, 68">
+                    <button id="randomBtn" class="secondary-btn" title="Generate Random Sorted Array">🎲 Random</button>
+                </div>
+
+                <div class="setup-group input-group">
+                    <label>Target Value:</label>
+                    <input type="number" id="targetInput" placeholder="e.g. 42">
+                </div>
+
+                <div class="setup-group btn-group">
+                    <button id="searchBtn" class="accent-btn main-action">Run Search</button>
+                </div>
+            </section>
+            
+            <div class="speed-control-container">
+                <label for="speedSlider">Animation Speed:</label>
+                <input type="range" id="speedSlider" min="1" max="100" value="60">
+            </div>
+
+            <!-- MAIN WORKSPACE -->
+            <section class="workspace-grid">
+                
+                <!-- VISUALIZER CANVAS (Left Side) -->
+                <div class="visualizer-section glass-panel">
+                    <div class="canvas-header">
+                        <h2>Array Status</h2>
+                        <div class="status-legend">
+                            <span class="legend-item"><span class="color-box yellow"></span> Active</span>
+                            <span class="legend-item"><span class="color-box red"></span> Eliminated</span>
+                            <span class="legend-item"><span class="color-box green"></span> Found</span>
+                        </div>
+                    </div>
+                    
+                    <div id="main-array-container" class="array-container">
+                        <!-- Array Boxes will be injected here -->
+                    </div>
+                    
+                    <!-- Action Description Box -->
+                    <div class="action-box">
+                        <h3>Current Action:</h3>
+                        <p id="action-text">Waiting to search...</p>
+                    </div>
+                </div>
+
+                <!-- LIVE LOGS WORKSPACE (Middle Side) -->
+                <div class="toast-section glass-panel">
+                    <div class="track-header">
+                        <h2>Live Logs</h2>
+                    </div>
+                    <div id="toast-container" class="toast-container-static"></div>
+                </div>
+
+                <!-- LOGIC WORKSPACE (Right Side) -->
+                <div class="code-section glass-panel">
+                    <div class="track-header">
+                        <h2>Algorithm Logic</h2>
+                    </div>
+                    <div class="code-container" id="code-display">
+                        <!-- Pseudo-code will be injected here -->
+                        <div class="code-line" style="color: var(--text-muted)">Select an algorithm to view logic.</div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
