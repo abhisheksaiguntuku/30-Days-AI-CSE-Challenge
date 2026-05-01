@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Table Collision Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Hash Table Collisions 🗄️</h1>
+                <p>Day 5/30 • Visualizing how Hash Maps handle duplicate indices.</p>
+                <div style="margin-top: 1rem;">
+                    <a href="theory.html" class="accent-btn" style="text-decoration: none; display: inline-block;">📖 View Theory & Examples</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- CONTROLS PANEL -->
+            <section class="setup-panel glass-panel">
+                <div class="setup-group">
+                    <label>Table Size:</label>
+                    <input type="number" id="sizeInput" value="10" min="3" max="20" style="width: 80px;">
+                    <button id="applySizeBtn" class="secondary-btn" title="Resize Table">Apply</button>
+                </div>
+                
+                <div class="setup-group">
+                    <label>Collision Strategy:</label>
+                    <select id="strategySelect" class="styled-select">
+                        <option value="linear">Linear Probing</option>
+                        <option value="quadratic">Quadratic Probing</option>
+                        <option value="chaining">Separate Chaining</option>
+                    </select>
+                </div>
+
+                <div class="setup-group input-group">
+                    <label>Insert Value (Key):</label>
+                    <input type="number" id="keyInput" placeholder="e.g. 42" style="width: 100px;">
+                    <button id="randomBtn" class="secondary-btn">🎲 Random</button>
+                </div>
+
+                <div class="setup-group btn-group" style="flex-direction: row; align-items: flex-end; gap: 0.5rem;">
+                    <button id="insertBtn" class="accent-btn main-action">Insert Node</button>
+                    <button id="resetBtn" class="danger-btn">Clear Table</button>
+                </div>
+            </section>
+            
+            <div class="speed-control-container">
+                <label for="speedSlider">Animation Speed:</label>
+                <input type="range" id="speedSlider" min="1" max="100" value="60">
+            </div>
+
+            <!-- MAIN WORKSPACE -->
+            <section class="workspace-grid">
+                
+                <!-- VISUALIZER CANVAS (Left Side) -->
+                <div class="visualizer-section glass-panel">
+                    <div class="canvas-header">
+                        <h2>Hash Table <span id="table-size-display">(Size: 10)</span></h2>
+                        <div class="hash-calculation">
+                            <span id="calc-text">Waiting to hash...</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-scroll-wrapper">
+                        <div id="hash-table-container" class="table-container">
+                            <!-- Bucket Rows will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE LOGS WORKSPACE (Middle Side) -->
+                <div class="toast-section glass-panel">
+                    <div class="track-header">
+                        <h2>Live Logs</h2>
+                    </div>
+                    <div id="toast-container" class="toast-container-static"></div>
+                </div>
+
+                <!-- LOGIC WORKSPACE (Right Side) -->
+                <div class="code-section glass-panel">
+                    <div class="track-header">
+                        <h2>Algorithm Logic</h2>
+                    </div>
+                    <div class="code-container" id="code-display">
+                        <!-- Pseudo-code will be injected here -->
+                        <div class="code-line" style="color: var(--text-muted)">Select a strategy.</div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Table Collision Strategies Explained</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .theory-container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        .theory-card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
+        .theory-card h2 { color: var(--accent); margin-bottom: 1rem; font-size: 1.8rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .theory-card h3 { color: var(--success); margin: 1.5rem 0 0.5rem 0; font-size: 1.3rem; }
+        .theory-card p { color: var(--text-main); line-height: 1.6; margin-bottom: 1rem; font-size: 1.05rem; }
+        .example-box { background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--warning); font-family: 'JetBrains Mono', monospace; color: #a5b4fc; }
+        .example-box span.comment { color: #6ee7b7; }
+        .nav-link { display: inline-block; margin-bottom: 2rem; color: var(--text-main); text-decoration: none; padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-weight: 600; transition: all 0.2s; }
+        .nav-link:hover { background: rgba(255,255,255,0.2); }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .comparison-table th, .comparison-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        .comparison-table th { color: var(--accent); font-weight: 800; background: rgba(0,0,0,0.2); }
+        .comparison-table tr:hover { background: rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+    <div class="theory-container">
+        <a href="index.html" class="nav-link">← Back to Visualizer</a>
+        
+        <header style="text-align: left; margin-bottom: 3rem;">
+            <div class="header-content">
+                <h1>Understanding Hash Collisions 🗄️</h1>
+                <p>What happens when two keys hash to the same exact index? We have to resolve the collision.</p>
+            </div>
+        </header>
+
+        <!-- Linear Probing -->
+        <div class="theory-card">
+            <h2>1. Linear Probing (Open Addressing)</h2>
+            <p><strong>Concept:</strong> If the calculated index is already occupied, simply step forward by exactly 1 slot until you find an empty bucket. If you reach the end of the array, you wrap around to the beginning.</p>
+            
+            <h3>Example Walkthrough:</h3>
+            <p>Assume Hash Table Size = 10. Hash Function = <code>Key % 10</code>.</p>
+            <div class="example-box">
+                1. Insert 42. Hash(42) = 2. 
+                   Bucket [2] is empty. 
+                   <span class="comment">// Result: [2] = 42</span><br><br>
+                2. Insert 52. Hash(52) = 2. 
+                   Bucket [2] is OCCUPIED (Collision!).
+                   Probe +1: Check Bucket [3]. It is empty.
+                   <span class="comment">// Result: [3] = 52</span><br><br>
+                3. Insert 62. Hash(62) = 2.
+                   Bucket [2] is OCCUPIED. 
+                   Probe +1: Check Bucket [3] - OCCUPIED by 52.
+                   Probe +1: Check Bucket [4] - Empty.
+                   <span class="comment">// Result: [4] = 62</span>
+            </div>
+            
+            <h3>Pros & Cons</h3>
+            <p><strong>Pro:</strong> Extremely cache-friendly since memory is contiguous. Easy to implement.<br>
+            <strong>Con:</strong> Suffers heavily from <strong>Primary Clustering</strong> (blocks of occupied slots merge together, meaning it takes longer and longer to find empty slots).</p>
+        </div>
+
+        <!-- Quadratic Probing -->
+        <div class="theory-card">
+            <h2>2. Quadratic Probing (Open Addressing)</h2>
+            <p><strong>Concept:</strong> Instead of stepping by 1, we step by perfect squares: 1², 2², 3², 4², etc. This rapidly spaces out colliding keys to prevent the primary clustering issue seen in Linear Probing.</p>
+            
+            <h3>Example Walkthrough:</h3>
+            <p>Assume Hash Table Size = 10. Hash Function = <code>Key % 10</code>.</p>
+            <div class="example-box">
+                1. Insert 42. Hash(42) = 2.
+                   Bucket [2] is empty. 
+                   <span class="comment">// Result: [2] = 42</span><br><br>
+                2. Insert 52. Hash(52) = 2. 
+                   Bucket [2] is OCCUPIED.
+                   Step 1² (+1): Check [2 + 1] = Bucket [3]. Empty.
+                   <span class="comment">// Result: [3] = 52</span><br><br>
+                3. Insert 62. Hash(62) = 2.
+                   Bucket [2] is OCCUPIED.
+                   Step 1² (+1): Check [2 + 1] = Bucket [3] - OCCUPIED by 52.
+                   Step 2² (+4): Check [2 + 4] = Bucket [6] - Empty.
+                   <span class="comment">// Result: [6] = 62</span>
+            </div>
+            
+            <h3>Pros & Cons</h3>
+            <p><strong>Pro:</strong> Eliminates primary clustering. Spreads keys out effectively.<br>
+            <strong>Con:</strong> Suffers from <strong>Secondary Clustering</strong> (keys that hash to the same initial index will follow the exact same probing sequence). Also, the math can sometimes skip empty slots entirely depending on table size.</p>
+        </div>
+
+        <!-- Separate Chaining -->
+        <div class="theory-card">
+            <h2>3. Separate Chaining (Closed Addressing)</h2>
+            <p><strong>Concept:</strong> Instead of searching for a new empty bucket in the array, every bucket simply contains a Linked List. If multiple keys hash to the same bucket, we just append them to the linked list at that index.</p>
+            
+            <h3>Example Walkthrough:</h3>
+            <p>Assume Hash Table Size = 10. Hash Function = <code>Key % 10</code>.</p>
+            <div class="example-box">
+                1. Insert 42. Hash(42) = 2.
+                   Bucket [2] list is empty. Add as first node.
+                   <span class="comment">// Result: [2] -> [42]</span><br><br>
+                2. Insert 52. Hash(52) = 2. 
+                   Bucket [2] list has [42]. Append to list.
+                   <span class="comment">// Result: [2] -> [42] -> [52]</span><br><br>
+                3. Insert 62. Hash(62) = 2.
+                   Bucket [2] list has [42] -> [52]. Append to list.
+                   <span class="comment">// Result: [2] -> [42] -> [52] -> [62]</span>
+            </div>
+            
+            <h3>Pros & Cons</h3>
+            <p><strong>Pro:</strong> Never "fills up" (no table resizing strictly required to resolve collisions). Deletion is incredibly easy (just delete a node from the linked list).<br>
+            <strong>Con:</strong> Not cache-friendly because Linked List nodes are scattered across memory using pointers. Requires extra memory for pointers.</p>
+        </div>
+
+        <!-- Comparison Summary -->
+        <div class="theory-card">
+            <h2>Summary Comparison</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Strategy</th>
+                    <th>Type</th>
+                    <th>Clustering Issue</th>
+                    <th>Cache Performance</th>
+                    <th>Memory Overhead</th>
+                </tr>
+                <tr>
+                    <td>Linear Probing</td>
+                    <td>Open Addressing</td>
+                    <td style="color: var(--danger)">Primary Clustering</td>
+                    <td style="color: var(--success)">Excellent</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Quadratic Probing</td>
+                    <td>Open Addressing</td>
+                    <td style="color: var(--warning)">Secondary Clustering</td>
+                    <td style="color: var(--success)">Good</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Separate Chaining</td>
+                    <td>Closed Addressing</td>
+                    <td style="color: var(--success)">No Clustering</td>
+                    <td style="color: var(--danger)">Poor</td>
+                    <td>High (Pointers)</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
