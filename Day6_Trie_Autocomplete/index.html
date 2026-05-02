@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trie (Prefix Tree) Autocomplete Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Trie Autocomplete 🌳⌨️</h1>
+                <div class="badge">Day 6 • Prefix Search</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS NAVIGATION -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('animation', event)">Animation</button>
+                <button class="tab-btn" onclick="switchTab('code', event)">Logic Code</button>
+                <button class="tab-btn" onclick="switchTab('theory', event)">Trie Theory</button>
+            </div>
+
+            <!-- ANIMATION TAB -->
+            <div id="animation-tab" class="tab-content active">
+                <section class="setup-panel glass-panel">
+                    <div class="setup-group">
+                        <label>Add Word:</label>
+                        <div class="input-with-btn">
+                            <input type="text" id="wordInput" placeholder="e.g. apple" maxlength="15">
+                            <button id="addBtn" class="accent-btn">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setup-group">
+                        <label>Delete Word:</label>
+                        <div class="input-with-btn">
+                            <input type="text" id="deleteInput" placeholder="e.g. ball" maxlength="15">
+                            <button id="deleteBtn" class="danger-btn">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="setup-group search-container">
+                        <label>Search / Autocomplete:</label>
+                        <div class="search-wrapper">
+                            <input type="text" id="searchInput" placeholder="Start typing..." autocomplete="off">
+                            <div id="autocompleteResults" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+
+                    <div class="setup-group btn-group">
+                        <button id="resetBtn" class="secondary-btn">Clear Trie</button>
+                    </div>
+                </section>
+
+                <div class="workspace-grid">
+                    <div class="visualizer-section glass-panel">
+                        <div class="canvas-header">
+                            <h2>Trie Structure</h2>
+                            <div class="current-path-display">Path: <span id="path-text">/root</span></div>
+                        </div>
+                        <div id="trie-canvas" class="trie-canvas">
+                            <svg id="tree-svg"></svg>
+                            <div id="nodes-container"></div>
+                        </div>
+                    </div>
+                    <div class="toast-section glass-panel">
+                        <div class="track-header"><h2>Live Logs</h2></div>
+                        <div id="toast-container" class="toast-container-static"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE TAB -->
+            <div id="code-tab" class="tab-content">
+                <div class="code-workspace glass-panel">
+                    <div class="track-header"><h2>Recursive Search Algorithm</h2></div>
+                    <div class="code-container" id="code-display"></div>
+                </div>
+            </div>
+
+            <!-- THEORY TAB -->
+            <div id="theory-tab" class="tab-content">
+                <div class="theory-workspace glass-panel">
+                    <h2>What is a Trie? (The Core Concept) 💡</h2>
+                    <p>Imagine a dictionary where words are organized by their <strong>prefixes</strong>. Instead of looking at a word like "APPLE" as one single thing, a Trie breaks it down into steps: <strong>A → P → P → L → E</strong>.</p>
+                    
+                    <div class="theory-box">
+                        <h3>How it works (In Simple Terms):</h3>
+                        <ul>
+                            <li><strong>Sharing is Caring:</strong> If you have "APP" and "APPLE", the first 3 characters are shared. The tree only creates NEW nodes when a word branches off.</li>
+                            <li><strong>The Search:</strong> When you type 'A', the computer jumps straight to the 'A' branch. It doesn't look at words starting with 'B', 'C', or 'D' at all. This is why it's incredibly fast.</li>
+                            <li><strong>End of Word:</strong> We use a special marker (the purple glow in this app) to say "a complete word ends here".</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-box" style="margin-top: 1.5rem;">
+                        <h3>Why use this?</h3>
+                        <p>Search engines like Google use Tries because they can find suggestions for your search out of billions of words in <strong>milliseconds</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
