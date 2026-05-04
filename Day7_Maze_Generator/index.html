@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Generator Visualizer | Randomized DFS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Maze Generator 🗺️🧱</h1>
+                <div class="badge">Day 7 • Randomized DFS</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS NAVIGATION -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('animation', event)">Animation</button>
+                <button class="tab-btn" onclick="switchTab('code', event)">DFS Logic</button>
+                <button class="tab-btn" onclick="switchTab('theory', event)">Maze Theory</button>
+            </div>
+
+            <!-- ANIMATION TAB -->
+            <div id="animation-tab" class="tab-content active">
+                <section class="controls-panel glass-panel">
+                    <div class="control-group">
+                        <label>Grid Size:</label>
+                        <select id="gridSize">
+                            <option value="10">10 x 10 (Fast)</option>
+                            <option value="15">15 x 15</option>
+                            <option value="20" selected>20 x 20 (Standard)</option>
+                            <option value="25">25 x 25</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Speed:</label>
+                        <input type="range" id="speedSlider" min="1" max="100" value="80">
+                    </div>
+
+                    <div class="btn-group">
+                        <button id="startBtn" class="accent-btn">Generate Maze</button>
+                        <button id="resetBtn" class="secondary-btn">Reset Grid</button>
+                    </div>
+                </section>
+
+                <div class="workspace-grid">
+                    <div class="visualizer-section glass-panel">
+                        <div class="canvas-header">
+                            <h2>Maze Canvas</h2>
+                            <div class="status-indicator">Status: <span id="status-text">Ready</span></div>
+                        </div>
+                        <div id="maze-container" class="maze-container">
+                            <!-- Grid cells injected by JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="info-section glass-panel">
+                        <div class="stats-panel">
+                            <h3>Algorithm Stats</h3>
+                            <div class="stat-item">
+                                <span>Cells Visited:</span>
+                                <span id="cells-visited">0 / 0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>Stack Depth:</span>
+                                <span id="stack-depth">0</span>
+                            </div>
+                        </div>
+
+                        <div class="stack-visualizer">
+                            <h3>Current Stack (Backtrack Path)</h3>
+                            <div id="stack-container" class="stack-container">
+                                <!-- Stack items injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE TAB -->
+            <div id="code-tab" class="tab-content">
+                <div class="code-workspace glass-panel">
+                    <div class="track-header"><h2>Randomized DFS Algorithm (Pseudo-code)</h2></div>
+                    <div class="code-container" id="code-display">
+                        <!-- Code injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEORY TAB -->
+            <div id="theory-tab" class="tab-content">
+                <div class="theory-workspace glass-panel">
+                    <h2>How Randomized DFS Works 🧠</h2>
+                    <p>The <strong>Randomized Depth-First Search</strong> (also known as the "Recursive Backtracker") is one of the most popular algorithms for generating "Perfect Mazes".</p>
+                    
+                    <div class="theory-box">
+                        <h3>Key Characteristics:</h3>
+                        <ul>
+                            <li><strong>Perfect Maze:</strong> Every cell is reachable, and there is exactly one path between any two cells (no loops!).</li>
+                            <li><strong>Winding Paths:</strong> DFS tends to create long, winding corridors with fewer junctions compared to other algorithms like Prim's.</li>
+                            <li><strong>Dead Ends:</strong> It creates many dead ends, making the maze more challenging to solve manually.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-box" style="margin-top: 1.5rem;">
+                        <h3>The "Backtracking" Magic:</h3>
+                        <p>When the algorithm hits a dead end (a cell where all neighbors are already visited), it "backtracks" through its history (the Stack) until it finds a cell that still has unvisited neighbors. This ensures that every single corner of the grid is carved out.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

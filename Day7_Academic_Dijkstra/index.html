@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Dijkstra Visualizer | Day 7</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Dijkstra Sum Solver 🔢📐</h1>
+                <div class="badge">Day 7 • Weighted Graph Visualization</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS NAVIGATION -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('animation', event)">Graph Visualization</button>
+                <button class="tab-btn" onclick="switchTab('code', event)">Program Code</button>
+            </div>
+
+            <!-- ANIMATION TAB -->
+            <div id="animation-tab" class="tab-content active">
+                <section class="controls-panel glass-panel">
+                    <div class="btn-group">
+                        <button id="startBtn" class="accent-btn">Run Dijkstra</button>
+                        <button id="stepBtn" class="secondary-btn">Next Step</button>
+                        <button id="resetBtn" class="danger-btn">Reset</button>
+                    </div>
+                    <div class="status-box">
+                        <span>Current Action: <strong id="action-text">Ready to solve</strong></span>
+                    </div>
+                </section>
+
+                <div class="workspace-grid">
+                    <!-- Graph Canvas -->
+                    <div class="visualizer-section glass-panel">
+                        <div class="canvas-header">
+                            <h2>The Weighted Graph</h2>
+                            <div class="badge-sm">Weighted Edges</div>
+                        </div>
+                        <div id="graph-container" class="graph-container">
+                            <svg id="graph-svg" width="100%" height="100%">
+                                <!-- Edges and Weights injected by JS -->
+                            </svg>
+                            <div id="nodes-layer">
+                                <!-- Nodes injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dijkstra Table -->
+                    <div class="table-section glass-panel">
+                        <div class="canvas-header">
+                            <h2>Distance Table</h2>
+                            <div class="badge-sm">Live Updates</div>
+                        </div>
+                        <table id="dijkstra-table">
+                            <thead>
+                                <tr>
+                                    <th>Node</th>
+                                    <th>Shortest Dist.</th>
+                                    <th>Parent</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Rows injected by JS -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="priority-queue-viz">
+                            <h3>Min-Priority Queue</h3>
+                            <div id="pq-container">
+                                <!-- PQ items -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE TAB -->
+            <div id="code-tab" class="tab-content">
+                <div class="code-workspace glass-panel">
+                    <div class="track-header"><h2>Actual Javascript Implementation</h2></div>
+                    <div class="code-container" id="code-display">
+                        <!-- Code with highlighting -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

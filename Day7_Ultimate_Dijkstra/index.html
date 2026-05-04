@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Dijkstra Solver | Day 7</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo-box">👨‍🏫</div>
+                <h1>Dijkstra Logic Teacher</h1>
+                <div class="badge">Day 7 • Pathfinding Solver</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('solver', event)">Visual Solver</button>
+                <button class="tab-btn" onclick="switchTab('code', event)">Program Code & Theory</button>
+            </div>
+
+            <div id="solver-tab" class="tab-content active">
+                <div class="dashboard-layout">
+                    <!-- LEFT: GRAPH VIEWPORT -->
+                    <div class="graph-section">
+                        <section class="controls-panel glass-panel">
+                            <div class="btn-group">
+                                <button id="startBtn" class="accent-btn">Auto-Run</button>
+                                <button id="stepBtn" class="secondary-btn">Next Step ➡️</button>
+                                <button id="resetBtn" class="danger-btn">Reset All</button>
+                            </div>
+                            <div class="manual-entry-area">
+                                <div class="input-group">
+                                    <input type="text" id="edge-from" placeholder="From" maxlength="1">
+                                    <input type="text" id="edge-to" placeholder="To" maxlength="1">
+                                    <input type="number" id="edge-weight" placeholder="Cost" min="1">
+                                    <button id="addEdgeBtn" class="add-btn">+ Add Edge</button>
+                                    <button id="removeEdgeBtn" class="remove-btn">✖ Remove Edge</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="graph-viewport glass-panel">
+                            <div class="viewport-header">
+                                <span class="tip">💡 Drag nodes to fix overlaps! You have 700px of vertical space to move them.</span>
+                            </div>
+                            <div id="graph-container" class="graph-container">
+                                <svg id="graph-svg" width="100%" height="100%"></svg>
+                                <div id="nodes-layer"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: INFO SIDEBAR -->
+                    <div class="info-sidebar">
+                        <div class="side-card glass-panel">
+                            <h3>Progress Table</h3>
+                            <div class="table-wrapper">
+                                <table id="dijkstra-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Node</th>
+                                            <th>Dist</th>
+                                            <th>Parent</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="side-card glass-panel">
+                            <h3>Priority Queue</h3>
+                            <div id="pq-container"></div>
+                        </div>
+
+                        <div class="teacher-box glass-panel">
+                            <div class="teacher-header">Step-by-Step Logic</div>
+                            <div class="teacher-body">
+                                <p id="explanation-text">Click 'Next Step' to begin.</p>
+                                <div class="math-box" id="math-display"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="code-tab" class="tab-content">
+                <!-- ... (rest remains same) -->
+                <div class="code-workspace">
+                    <div class="glass-panel" style="margin-bottom: 2rem;">
+                        <div class="code-header">
+                            <h2>Full Dijkstra Implementation (JS)</h2>
+                            <button class="copy-btn" id="copyBtn">Copy Code</button>
+                        </div>
+                        <pre id="code-display" class="code-pre"></pre>
+                    </div>
+
+                    <div class="glass-panel">
+                        <h2>Theory & How it Works 🧠</h2>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h3>1. Initialization</h3>
+                                <p>Set distance to <strong>Start Node = 0</strong> and all others to <strong>Infinity (∞)</strong>. This marks all other nodes as "unreachable" until we explore them.</p>
+                            </div>
+                            <div class="theory-card">
+                                <h3>2. The Greedy Choice</h3>
+                                <p>Always pick the unvisited node with the <strong>smallest distance</strong>. This ensures that when we process a node, we've found the shortest path to it.</p>
+                            </div>
+                            <div class="theory-card">
+                                <h3>3. Edge Relaxation</h3>
+                                <p>This is the most important part! For every neighbor <em>v</em> of current node <em>u</em>:<br>
+                                <code>if (dist[u] + weight(u,v) < dist[v]) { dist[v] = newTotal; }</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

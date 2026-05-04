@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra's Shortest Path Visualizer | Day 7</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>Pathfinding Visualizer 📍🗺️</h1>
+                <div class="badge">Day 7 • Dijkstra's Algorithm</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS NAVIGATION -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('animation', event)">Animation</button>
+                <button class="tab-btn" onclick="switchTab('theory', event)">How it Works</button>
+            </div>
+
+            <!-- ANIMATION TAB -->
+            <div id="animation-tab" class="tab-content active">
+                <section class="controls-panel glass-panel">
+                    <div class="instruction-box">
+                        <span>Click & Drag to draw <strong>Walls</strong>. Drag 🟢 to move <strong>Start</strong>, 🔴 to move <strong>Target</strong>.</span>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="visualizeBtn" class="accent-btn">Visualize Dijkstra!</button>
+                        <button id="clearWallsBtn" class="secondary-btn">Clear Walls</button>
+                        <button id="resetBtn" class="danger-btn">Reset Grid</button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speedSlider" min="1" max="100" value="90">
+                    </div>
+                </section>
+
+                <div class="visualizer-container glass-panel">
+                    <div class="grid-header">
+                        <div class="legend">
+                            <div class="legend-item"><div class="node-start"></div> Start</div>
+                            <div class="legend-item"><div class="node-target"></div> Target</div>
+                            <div class="legend-item"><div class="node-wall"></div> Wall</div>
+                            <div class="legend-item"><div class="node-visited"></div> Visited</div>
+                            <div class="legend-item"><div class="node-shortest-path"></div> Path</div>
+                        </div>
+                        <div class="status-indicator">Status: <span id="status-text">Ready</span></div>
+                    </div>
+                    
+                    <div id="grid-container" class="grid-container">
+                        <!-- Grid injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEORY TAB -->
+            <div id="theory-tab" class="tab-content">
+                <div class="theory-workspace glass-panel">
+                    <h2>Dijkstra's Algorithm: The GPS Logic 🧠</h2>
+                    <p>Dijkstra's algorithm is the foundation for almost every navigation system in the world. It finds the shortest path between a starting node and every other node in a graph.</p>
+                    
+                    <div class="theory-box">
+                        <h3>How it works (Step-by-Step):</h3>
+                        <ol>
+                            <li><strong>Initialize:</strong> Set the distance to the Start node to 0, and all other nodes to Infinity.</li>
+                            <li><strong>Explore:</strong> Look at the neighbors of the current node. Calculate their distance from the start.</li>
+                            <li><strong>Update:</strong> If the new path is shorter than what we knew before, update the distance.</li>
+                            <li><strong>Repeat:</strong> Always pick the node with the <em>smallest</em> distance next. This is why it's called a "Greedy" algorithm.</li>
+                        </ol>
+                    </div>
+
+                    <div class="theory-box" style="margin-top: 1.5rem;">
+                        <h3>Why is it special?</h3>
+                        <p>Unlike simple search algorithms, Dijkstra's is <strong>Guaranteed</strong> to find the shortest possible path. It doesn't just find a way; it finds the <em>best</em> way.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
