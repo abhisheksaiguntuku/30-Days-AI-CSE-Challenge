@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi Animator | Day 8</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo-box">🏯</div>
+                <h1>Hanoi Recursion Teacher</h1>
+                <div class="badge">Day 8 • Algorithm Visualization</div>
+            </div>
+        </header>
+
+        <main>
+            <!-- TABS -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('animator', event)">Interactive Animator</button>
+                <button class="tab-btn" onclick="switchTab('code', event)">Recursive Code & Theory</button>
+            </div>
+
+            <div id="animator-tab" class="tab-content active">
+                <div class="dashboard-layout">
+                    <!-- LEFT: THE STAGE -->
+                    <div class="stage-section">
+                        <!-- NEW: GOLDEN RULE BANNER -->
+                        <div class="rule-banner glass-panel">
+                            <span class="rule-icon">⚠️</span>
+                            <div class="rule-text">
+                                <strong>THE GOLDEN RULE:</strong> You can <u>NEVER</u> place a larger disk on top of a smaller one. 
+                                <span class="rule-subtext">This single restriction is why the algorithm must move disks back and forth!</span>
+                            </div>
+                        </div>
+
+                        <section class="controls-panel glass-panel">
+                            <div class="control-group">
+                                <label>Disks: <span id="disk-count-val">3</span></label>
+                                <input type="range" id="disk-count" min="3" max="8" value="3">
+                            </div>
+                            <div class="control-group">
+                                <label>Speed</label>
+                                <input type="range" id="speed" min="1" max="10" value="5">
+                            </div>
+                            <div class="btn-group">
+                                <button id="startBtn" class="accent-btn">Start Solve</button>
+                                <button id="pauseBtn" class="secondary-btn">Pause</button>
+                                <button id="resetBtn" class="danger-btn">Reset</button>
+                            </div>
+                        </section>
+
+                        <div class="hanoi-stage glass-panel">
+                            <div class="towers-container">
+                                <div class="tower" id="tower-0">
+                                    <div class="pole"></div>
+                                    <div class="base">SOURCE</div>
+                                </div>
+                                <div class="tower" id="tower-1">
+                                    <div class="pole"></div>
+                                    <div class="base">AUXILIARY</div>
+                                </div>
+                                <div class="tower" id="tower-2">
+                                    <div class="pole"></div>
+                                    <div class="base">DESTINATION</div>
+                                </div>
+                            </div>
+                            <div id="disks-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="info-sidebar">
+                        <div class="side-card glass-panel">
+                            <h3>Current Stats</h3>
+                            <div class="stats-grid">
+                                <div class="stat-box">
+                                    <span class="stat-label">Total Steps</span>
+                                    <span class="stat-value" id="total-steps">7</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-label">Completed</span>
+                                    <span class="stat-value" id="current-step">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="teacher-box glass-panel">
+                            <div class="teacher-header">Recursion Logic</div>
+                            <div class="teacher-body">
+                                <p id="explanation-text">Adjust disks and click Start.</p>
+                                <div class="logic-box" id="logic-display">
+                                    move(n, src, aux, dest)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="side-card glass-panel">
+                            <h3>Move History</h3>
+                            <div id="history-container" class="history-list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="code-tab" class="tab-content">
+                <div class="code-workspace scrollable-content">
+                    <div class="glass-panel">
+                        <div class="code-header">
+                            <h2>The Recursive Solution (JavaScript)</h2>
+                            <button class="copy-btn" id="copyBtn">Copy Code</button>
+                        </div>
+                        <!-- NEW: HIGHLIGHTED CODE NOTE -->
+                        <div class="code-note">
+                            <strong>NOTE FOR BEGINNERS:</strong> The recursive calls below are basically saying "Move everyone else out of the way" so we can move the biggest disk.
+                        </div>
+                        <pre id="code-display" class="code-pre"></pre>
+                    </div>
+
+                    <!-- ... (theory content remains same) -->
+                    <div class="glass-panel doubt-section">
+                        <h2 style="color: var(--warning);">❓ Common Doubt: "Why can't we just move the whole stack?"</h2>
+                        <div class="doubt-box">
+                            <p>It seems simpler to just move everything to the helper and then to the target, right? <strong>But you can't!</strong></p>
+                            <div class="rule-highlight">
+                                <p><strong>The Golden Rule:</strong> You can NEVER place a large disk on a smaller one.</p>
+                            </div>
+                            <p>Because of this, every time you want to move the <em>Largest Disk</em> to the destination, all other disks <strong>must</strong> be on the auxiliary pole. To get them there, you have to follow the same rules, which creates a chain reaction of moves. This "chain reaction" is exactly what <strong>Recursion</strong> handles!</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel theory-card-full">
+                        <h2>Simplified Pseudo-Code</h2>
+                        <div class="pseudo-box">
+<pre>
+FUNCTION moveDisks(n, src, aux, dest)
+    IF n == 1:
+        MOVE disk FROM src TO dest
+        RETURN
+
+    // Step 1: Move n-1 disks to helper
+    moveDisks(n-1, src, dest, aux)
+
+    // Step 2: Move remaining disk to target
+    MOVE disk FROM src TO dest
+
+    // Step 3: Move n-1 disks from helper to target
+    moveDisks(n-1, aux, src, dest)
+ENDFUNCTION
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel theory-grid-detailed">
+                        <div class="theory-item">
+                            <h3>🌍 Real-World Applications</h3>
+                            <p>It is used in <strong>Backup Rotation Schemes</strong> (like Grandfather-Father-Son backups) to decide which tapes to overwrite. It's also used in <strong>Psychological Testing</strong> to evaluate problem-solving skills.</p>
+                        </div>
+                        <div class="theory-item">
+                            <h3>📊 Complexity Analysis</h3>
+                            <div class="complexity-table">
+                                <div class="c-row"><span>Time Complexity</span> <strong>O(2<sup>n</sup>)</strong></div>
+                                <div class="c-row"><span>Space Complexity</span> <strong>O(n)</strong></div>
+                                <p class="small-note">*Space is O(n) because of the maximum depth of the recursion stack.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel comparison-section">
+                        <h2>Pros & Cons of this Approach</h2>
+                        <div class="table-container">
+                            <table class="pro-con-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Advantages ✅</th>
+                                        <th>Disadvantages ❌</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Implementation</td>
+                                        <td>Extremely short and elegant code.</td>
+                                        <td>Recursive calls can lead to stack overflow.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Efficiency</td>
+                                        <td>Guarantees the minimum possible moves.</td>
+                                        <td>Very slow for n > 20 (billions of steps).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readability</td>
+                                        <td>Easy to understand the logic flow.</td>
+                                        <td>Hard to trace without a debugger.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

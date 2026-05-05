@@ -1,0 +1,107 @@
+:root {
+    --bg-dark: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+.app-container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+h1 { font-size: 2rem; font-weight: 800; background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.tabs-nav { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.tab-btn { padding: 0.75rem 2rem; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--text-muted); cursor: pointer; font-weight: 600; }
+.tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.dashboard-layout { display: grid; grid-template-columns: 1fr 380px; gap: 2rem; }
+
+.glass-panel { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 2rem; }
+
+/* NEW: Rule Banner Styling */
+.rule-banner {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+    animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(245, 158, 11, 0.1); }
+    to { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+}
+.rule-icon { font-size: 1.5rem; }
+.rule-text { font-size: 0.95rem; line-height: 1.4; color: var(--text-main); }
+.rule-text strong { color: var(--warning); }
+.rule-subtext { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+/* Controls */
+.controls-panel { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 1.5rem; }
+.btn-group { display: flex; gap: 1rem; }
+button { padding: 0.8rem 1.5rem; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.accent-btn { background: var(--accent); color: white; }
+.secondary-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); }
+.danger-btn { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid var(--danger); }
+
+.hanoi-stage { height: 500px; position: relative; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.towers-container { display: flex; justify-content: space-around; width: 100%; height: 100%; position: absolute; bottom: 0; }
+.tower { width: 250px; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+.pole { width: 12px; height: 350px; background: linear-gradient(to right, #334155, #475569); border-radius: 6px; position: absolute; bottom: 40px; }
+.base { width: 200px; height: 40px; background: #1e293b; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--text-muted); border-bottom: 4px solid var(--accent); }
+
+#disks-container { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+.disk { position: absolute; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 900; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 20; }
+
+/* Theory Page Styling */
+.scrollable-content { max-height: 100%; overflow-y: auto; }
+.code-pre { background: #000; padding: 2rem; border-radius: 0 0 15px 15px; color: #a5b4fc; font-family: 'JetBrains Mono', monospace; line-height: 1.7; overflow-x: auto; }
+
+/* NEW: Code Note Styling */
+.code-note {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid var(--accent);
+    padding: 1rem; border-radius: 15px 15px 0 0;
+    font-size: 0.9rem; color: var(--text-main);
+    border-bottom: none;
+}
+.code-note strong { color: var(--accent); }
+
+.pseudo-box { background: #000; padding: 1.5rem; border-radius: 12px; margin-top: 1rem; color: var(--warning); border-left: 4px solid var(--warning); }
+.pseudo-box pre { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.5; }
+
+.theory-grid-detailed { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.theory-item h3 { color: var(--accent); margin-bottom: 1rem; }
+.theory-item p { color: var(--text-muted); line-height: 1.6; }
+
+.complexity-table { background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; margin-top: 1rem; }
+.c-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.c-row span { color: var(--text-muted); }
+.c-row strong { color: var(--warning); font-family: 'JetBrains Mono', monospace; }
+
+.pro-con-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.pro-con-table th { text-align: left; padding: 1rem; background: rgba(255,255,255,0.03); color: var(--accent); }
+.pro-con-table td { padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+.pro-con-table td:nth-child(2) { color: var(--success); }
+.pro-con-table td:nth-child(3) { color: var(--danger); }
+
+/* Sidebar Stats */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.stat-box { background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
+.stat-value { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+
+.teacher-box { background: rgba(59, 130, 246, 0.05); border-left: 6px solid var(--accent); }
+.logic-box { margin-top: 1rem; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; color: var(--warning); }
+.history-list { height: 200px; overflow-y: auto; }
+.history-item { font-size: 0.85rem; padding: 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.history-item span { color: var(--accent); font-weight: 700; }
